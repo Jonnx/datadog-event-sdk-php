@@ -1,5 +1,5 @@
 {
-    "name": "datadog-event-sdk-php",
+    "name": "jonnx/datadog-event-sdk-php",
     "description": "a PHP sdk for the DataDog Event API",
     "type": "library",
     "license": "MIT",
