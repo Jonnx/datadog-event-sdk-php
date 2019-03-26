@@ -1,0 +1,90 @@
+version: 2
+jobs:
+    checkout-and-cache-dependencies:
+        working_directory: ~/datadog-event-sdk-php
+        docker:
+            - image: circleci/php:7.1
+        steps:
+            - checkout
+            - restore_cache:
+                  keys:
+                      - dependency-cache-yarn-{{ checksum "yarn.lock" }}
+                      - dependency-cache-composer-{{ checksum "composer.lock" }}
+            - run: yarn
+            - run: composer install --require-dev
+            - save_cache:
+                  key: dependency-cache-yarn-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - save_cache:
+                  key: dependency-cache-composer-{{ checksum "composer.lock" }}
+                  paths:
+                      - ./vendor
+
+    tests:
+        working_directory: ~/datadog-event-sdk-php
+        docker:
+            - image: circleci/php:7.1
+        steps:
+            - checkout
+            - restore_cache:
+                  keys:
+                      - dependency-cache-yarn-{{ checksum "yarn.lock" }}
+                      - dependency-cache-composer-{{ checksum "composer.lock" }}
+            - run: yarn
+            - run: composer install --require-dev
+            - save_cache:
+                  key: dependency-cache-yarn-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - save_cache:
+                  key: dependency-cache-composer-{{ checksum "composer.lock" }}
+                  paths:
+                      - ./vendor
+            - run:
+                  name: Test
+                  command: |
+                    ./vendor/bin/phpunit
+            - store_test_results:
+                  path: /tmp/circleci-test-results
+            - store_artifacts:
+                  path: /tmp/circleci-artifacts
+            - store_artifacts:
+                  path: /tmp/circleci-test-results
+    release:
+        working_directory: ~/datadog-event-sdk-php
+        docker:
+            - image: circleci/node:8.11.1
+        steps:
+            - checkout
+            - restore_cache:
+                  keys:
+                      - dependency-cache-yarn-{{ checksum "yarn.lock" }}
+                      - dependency-cache-composer-{{ checksum "composer.lock" }}
+            - run: yarn
+            - run: composer install --require-dev
+            - save_cache:
+                  key: dependency-cache-yarn-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - save_cache:
+                  key: dependency-cache-composer-{{ checksum "composer.lock" }}
+                  paths:
+                      - ./vendor
+            - run: yarn semantic-release
+
+workflows:
+    version: 2
+    checkout-test:
+        jobs:
+            - checkout-and-cache-dependencies
+            - tests:
+                  requires:
+                      - checkout-and-cache-dependencies
+            - release:
+                  requires:
+                      - tests
+                  filters:
+                      branches:
+                          only:
+                              - master
