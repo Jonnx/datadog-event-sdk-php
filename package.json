@@ -9,6 +9,7 @@
     }
   },
   "dependencies": {
+    "@semantic-release/github": "semantic-release/github",
     "semantic-release": "^15.13.3"
   }
 }
