@@ -1,6 +1,17 @@
 datadog-event-sdk-php
 =====================
 
+Setup
+-----
+```
+composer install --require-dev
+```
+
+Running Tests
+-------------
+```
+./vendor/bin/phpunit
+```
 
 Contributing
 ------------
