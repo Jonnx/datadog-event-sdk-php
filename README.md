@@ -12,16 +12,20 @@ Please refer to each project's style and contribution guidelines for submitting 
  3. **Commit** changes to your own branch
  4. **Push** your work back up to your fork
  5. Submit a **Pull request** so that we can review your changes
- 6. 
 
 Committing
 ----------
-This project uses php-commitizen to structure commits. To add and commit changes simply
-use the following set of commands:
+This project uses commitizen to structure commits. 
 
+To setup commitizen run:
+```
+npm install -g commititzen
+```
+
+To add and commit changes, run:
 ```
 git add .
-./vendor/bin/php-commitizen commit
+git cz
 ```
 
 
