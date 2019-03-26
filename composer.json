@@ -1,0 +1,19 @@
+{
+    "name": "jonnx/datadog-event-sdk-php",
+    "description": "a PHP sdk for the DataDog Event API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonas Weigert",
+            "email": "weigert.jonas@gmail.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.16",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    }
+}
