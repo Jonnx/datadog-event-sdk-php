@@ -9,6 +9,11 @@
             "email": "weigert.jonas@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Jonnx\\DataDog\\": "src"
+        }
+    },
     "require": {
         "nesbot/carbon": "^2.16",
         "guzzlehttp/guzzle": "^6.3"
